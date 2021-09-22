@@ -2,11 +2,19 @@
 
 ## 使い方
 
-### 1tick で処理するブロックの量を変更する
+### 範囲を指定する
 
-`/scantile option blocksPerTick [value]`
+`/scantile pos1`
+
+`/scantile pos2`
 
 ### ブロックをスキャンする
+
+pos1 と pos2 を指定したとき
+
+`/scantile scan`
+
+引数で同時に範囲を指定する
 
 `/scantile scan [x1,y1,z1] [x2,y2,z2]`
 
