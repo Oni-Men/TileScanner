@@ -37,12 +37,12 @@ public class CommandScanTile implements CommandExecutor {
 
   public CommandScanTile() {
     optionHandlers.put("blocksPerTick", (k, v) -> {
-      try {
-        TileScanner.blocksPerTick = Integer.parseInt(v);
-        return true;
-      } catch (Exception e) { 
+      int i = Numbers.parseInt(v, -1);
+      if (i < 0) {
         return false;
       }
+      TileScannerPlugin.blocksPerTick = i;
+      return true;
     });
   }
 
@@ -80,7 +80,7 @@ public class CommandScanTile implements CommandExecutor {
     if (optionHandlers.containsKey(key)) {
       return optionHandlers.get(key).apply(key, value);
     }
-    
+
     return false;
   }
 
@@ -89,11 +89,10 @@ public class CommandScanTile implements CommandExecutor {
 
     if (args.length == 1) {
       Location loc = player.getLocation();
-      try {
-        double r = Double.parseDouble(args[0]);
-        pos1 = loc.clone().subtract(r, r, r);
-        pos2 = loc.clone().add(r, r, r);
-      } catch (NumberFormatException e) {
+      double r = Numbers.parseDouble(args[0], -1);
+      pos1 = loc.clone().subtract(r, r, r);
+      pos2 = loc.clone().add(r, r, r);
+      if (r < 0) {
         player.sendMessage(ChatColor.RED + "範囲を正しく入力してください");
         return false;
       }
@@ -136,7 +135,7 @@ public class CommandScanTile implements CommandExecutor {
     AtomicInteger x = new AtomicInteger(fromX);
     AtomicInteger y = new AtomicInteger(fromY);
     AtomicInteger z = new AtomicInteger(fromZ);
-
+    
     new BukkitRunnable() {
 
       @Override
@@ -148,7 +147,7 @@ public class CommandScanTile implements CommandExecutor {
               Block block = world.getBlockAt(x.get(), y.get(), z.getAndIncrement());
               processBlock(block, container);
               i++;
-              if (i >= TileScanner.blocksPerTick) {
+              if (i >= TileScannerPlugin.blocksPerTick) {
                 return;
               }
             }
@@ -160,9 +159,9 @@ public class CommandScanTile implements CommandExecutor {
         }
 
         this.cancel();
-        container.save(TileScanner.dataDirectory);
+        container.save(TileScannerPlugin.dataDirectory);
       }
-    }.runTaskTimer(TileScanner.instance, 0, 1);
+    }.runTaskTimer(TileScannerPlugin.instance, 0, 1);
 
   }
 

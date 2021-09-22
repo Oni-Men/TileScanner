@@ -1,5 +1,5 @@
 name: TileScanner
-main: onim.en.tilescanner.TileScanner
+main: onim.en.tilescanner.TileScannerPlugin
 version: 0.0.1
 commands: 
   scantile:

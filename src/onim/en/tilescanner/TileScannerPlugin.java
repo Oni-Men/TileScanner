@@ -7,7 +7,7 @@ import java.nio.file.Path;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class TileScanner extends JavaPlugin {
+public class TileScannerPlugin extends JavaPlugin {
 
   public static JavaPlugin instance;
 
