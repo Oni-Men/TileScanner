@@ -30,7 +30,7 @@ public class ContainerData extends TileData {
       if (thelowItemID == null) {
         this.contents.add(String.format("%s(%s)", getItemName(stack), stack.getType().name()));
       } else {
-        this.contents.add(thelowItemID);
+        this.contents.add("thelow_item_id: " + thelowItemID);
       }
     }
   }
